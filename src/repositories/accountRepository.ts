@@ -8,3 +8,19 @@ export async function createNewAccount() {
     })
     return id
 }
+
+export async function getAccountByuserId(id: number) {
+    return await db.user.findUnique({
+        where: {id},
+        select: {
+            id: true,
+            name: true,
+            account: {
+                select: {
+                    id: true,
+                    balance: true
+                }
+            }
+        }
+    })
+}

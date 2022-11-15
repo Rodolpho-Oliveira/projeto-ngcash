@@ -28,11 +28,25 @@ export async function validateToken(req: Request, res: Response, next: NextFunct
     const tokenData = JSON.stringify(jwt.verify(token, JWT))
     const userData: { name: string } = JSON.parse(tokenData)
     if(!userData){
-        throw {type: "Authorization error", status: 401}
+        throw {type: "Authorization token error", status: 401}
     }
 
-    const {id} = await checkUserName(userData.name)
-    res.locals.user = id
+    const {id, accountId} = await checkUserName(userData.name)
+    if(!id || !accountId){
+        throw {type: "User not found", status: 401}
+    }
+    
+    res.locals.user = {id, accountId}
+
+    next()
+}
+
+export async function validateAccountId(req: Request, res: Response, next: NextFunction) {
+    const {accountId} = res.locals.user
+    const {id} = req.params
+    if(accountId !== parseInt(id)){
+        throw {type: "Wrong account", status: 401}
+    }
 
     next()
 }
