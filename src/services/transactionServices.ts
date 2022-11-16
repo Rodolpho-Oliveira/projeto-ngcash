@@ -1,5 +1,5 @@
-import { getAccountByuserId } from "../repositories/accountRepository.js"
-import { insertTransaction } from "../repositories/transactionRepository.js"
+import { getAccountByUserId } from "../repositories/accountRepository.js"
+import { getTransactionByAccountId, insertTransaction } from "../repositories/transactionRepository.js"
 import { checkUserName } from "../repositories/userRepository.js"
 
 export async function checkTransactionInfo(value: number, id: number, name: string) {
@@ -7,7 +7,7 @@ export async function checkTransactionInfo(value: number, id: number, name: stri
         throw {status: 400, type: "Missing information"}
     }
 
-    const {account} = await getAccountByuserId(id)
+    const {account} = await getAccountByUserId(id)
 
     console.log(account)
     if(value < 0 || value > account.balance){
@@ -25,4 +25,14 @@ export async function checkTransactionInfo(value: number, id: number, name: stri
     }
 
     await insertTransaction(value, contact.id, account.id)
+}
+
+export async function getTransactionByUser(userId: number){
+    const userAccount = await getAccountByUserId(userId)
+
+    if(!userAccount){
+        throw {status: 404, type: "Transactions not found"}
+    }
+
+    return await getTransactionByAccountId(userAccount.account.id)
 }

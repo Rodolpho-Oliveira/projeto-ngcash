@@ -9,7 +9,7 @@ export async function createNewAccount() {
     return id
 }
 
-export async function getAccountByuserId(id: number) {
+export async function getAccountByUserId(id: number) {
     return await db.user.findUnique({
         where: {id},
         select: {

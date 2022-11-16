@@ -29,3 +29,14 @@ export async function insertTransaction(value: number, creditedAccountId: number
             }
         }})
 }
+
+export async function getTransactionByAccountId(id: number){
+    return await db.transaction.findMany({
+        where: {
+            OR: [
+                {creditedAccountId: id},
+                {debitedAccountId: id}
+            ]
+        }
+    })
+}
