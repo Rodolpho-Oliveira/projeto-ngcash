@@ -4,6 +4,6 @@ import { validateAccountId, validateToken } from "../middlewares/authMiddleware.
 
 const accountRouter = Router()
 
-accountRouter.post("/home/:id", validateToken, validateAccountId, getBalance)
+accountRouter.get("/home/:id", validateToken, validateAccountId, getBalance)
 
 export default accountRouter
