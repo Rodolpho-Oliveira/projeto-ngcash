@@ -34,9 +34,12 @@ export async function getTransactionByAccountId(id: number){
     return await db.transaction.findMany({
         where: {
             OR: [
-                {creditedAccountId: id},
-                {debitedAccountId: id}
-            ]
-        }
+                {debitedAccountId: id},
+                {creditedAccountId: id}
+            ],
+        },
+        orderBy: {
+            createdAt: "desc"
+        },
     })
 }
