@@ -28,6 +28,6 @@ export async function singInService({name, password}: {name: string, password: s
 
     const JWT = process.env.JWT_TOKEN
 
-    const token = jwt.sign({ name: check.name }, JWT)
+    const token = jwt.sign({ name: check.name }, JWT, { expiresIn: "1d" })
     return [token, check.id]
 }
