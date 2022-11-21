@@ -31,12 +31,12 @@ export async function validateToken(req: Request, res: Response, next: NextFunct
         throw {type: "Authorization token error", status: 401}
     }
 
-    const {id, accountId} = await checkUserName(userData.name)
-    if(!id || !accountId){
+    const accountId = await checkUserName(userData.name)
+    if(!accountId){
         throw {type: "User not found", status: 401}
     }
     
-    res.locals.user = {id, accountId}
+    res.locals.user = accountId
 
     next()
 }
