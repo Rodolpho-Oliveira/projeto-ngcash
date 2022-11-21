@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon ./src/app/server.ts",
+    "dev": "nodemon ./src/app/server.ts",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev --name init",
     "dev:docker:up": "docker-compose -f docker-compose.dev.yml --env-file .env up",
