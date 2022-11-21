@@ -12,7 +12,8 @@ export async function makeTransaction(req: Request, res: Response){
 
 export async function getTransactionById(req: Request, res: Response){
     const { id } = req.params
-    const transactions = await getTransactionByUser(parseInt(id))
+    const { order, transactionType } = req.query
+    const transactions = await getTransactionByUser(parseInt(id), order as string, transactionType as string)
 
     res.status(200).send(transactions)
 }

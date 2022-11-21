@@ -27,12 +27,12 @@ export async function checkTransactionInfo(value: number, id: number, name: stri
     await insertTransaction(value, contact.id, account.id)
 }
 
-export async function getTransactionByUser(userId: number){
+export async function getTransactionByUser(userId: number, order?: string, transactionType?: string){
     const userAccount = await getAccountByUserId(userId)
 
     if(!userAccount){
         throw {status: 404, type: "Transactions not found"}
     }
 
-    return await getTransactionByAccountId(userAccount.account.id)
+    return await getTransactionByAccountId(userAccount.account.id, order, transactionType)
 }

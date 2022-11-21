@@ -30,16 +30,15 @@ export async function insertTransaction(value: number, creditedAccountId: number
         }})
 }
 
-export async function getTransactionByAccountId(id: number){
+export async function getTransactionByAccountId(id: number, order?: string, transactionType?: string){
     return await db.transaction.findMany({
         where: {
             OR: [
-                {debitedAccountId: id},
-                {creditedAccountId: id}
+                transactionType === "credit" ? {creditedAccountId: id} : transactionType === "debit" ? {debitedAccountId: id} : {creditedAccountId: id}, {debitedAccountId: id}
             ],
         },
         orderBy: {
-            createdAt: "desc"
+            createdAt: order === "asc" ? "asc" : "desc"
         },
     })
 }
